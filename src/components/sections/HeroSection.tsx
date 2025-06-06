@@ -1,21 +1,77 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import Button from '../ui/Button';
 import StockCard from '../ui/StockCard';
 
-const dummyStocks = Array.from({ length: 12 }).map((_, i) => ({
-  id: i,
-  icon: '/images/stock-img.png',
-  index: 'NASDAQ',
-  price: '4,420.00 USD',
-  change: i % 2 === 0 ? '-0.26%' : '+0.15%',
-  changeValue: i % 2 === 0 ? '63.20 (-0.26%)' : '32.10 (+0.15%)',
-}));
+const tickerList = [
+  'MSFT', 'NVDA', 'AAPL', 'AMZN', 'META',
+  'GOOGL', 'GOOG', 'BRK.B', 'TSLA', 'AVGO',
+  'UNH', 'JNJ', 'V', 'WMT', 'XOM',
+  'MA', 'PG', 'LLY', 'HD', 'MRK',
+];
+
+const FINNHUB_API_KEY = 'd11m0nhr01qjtpe7odsgd11m0nhr01qjtpe7odt0';
+
+interface Stock {
+  id: number;
+  icon: string;
+  index: string;
+  price: string;
+  change: string;
+  changeValue: string;
+}
 
 const HeroSection: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [stocks, setStocks] = useState<Stock[]>([]);
+
+  useEffect(() => {
+    const fetchStockData = async () => {
+      try {
+        const quotePromises = tickerList.map((ticker) =>
+          axios.get(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB_API_KEY}`)
+        );
+
+        const profilePromises = tickerList.map((ticker) =>
+          axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${ticker}&token=${FINNHUB_API_KEY}`)
+        );
+
+        const [quoteResponses, profileResponses] = await Promise.all([
+          Promise.all(quotePromises),
+          Promise.all(profilePromises),
+        ]);
+
+        const merged = tickerList.map((ticker, idx) => {
+          const quote = quoteResponses[idx].data;
+          const profile = profileResponses[idx].data;
+
+          return {
+            id: idx,
+            icon: profile.logo || '/images/stock-img.png',
+            index: ticker,
+            price: `$${quote.c.toFixed(2)} USD`,
+            change:
+              quote.dp >= 0
+                ? `+${quote.dp.toFixed(2)}%`
+                : `${quote.dp.toFixed(2)}%`,
+            changeValue: `${quote.d.toFixed(2)} (${quote.dp.toFixed(2)}%)`,
+          };
+        });
+
+        setStocks([...merged, ...merged]); // duplicate for smooth scroll
+      } catch (error) {
+        console.error('Error fetching stock data:', error);
+      }
+    };
+
+    fetchStockData(); // initial load
+
+    const interval = setInterval(fetchStockData, 5 * 60 * 1000); // refresh every 5 mins
+    return () => clearInterval(interval); // cleanup
+  }, []);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -49,7 +105,7 @@ const HeroSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1400px] w-full mx-auto mt-auto px-4 sm:px-6 flex flex-col items-center text-center pt-[50px] sm:pt-[60px] md:pt-[80px] lg:pt-[112px]">
         <h1 className="text-[28px] sm:text-[36px] md:text-[40px] lg:text-[50px] xl:text-[60px] leading-tight font-medium text-white">
-          <span className="inline-block">The FIRST AI Driven</span>
+          <span className="inline-block">The FIRST GLOBAL AI Driven</span>
           <Image
             src="/images/hero-contant-img.png"
             alt="Stock Learn Icon"
@@ -61,7 +117,7 @@ const HeroSection: React.FC = () => {
         </h1>
 
         <p className="text-sm sm:text-base text-[#7B8380] mt-6 leading-relaxed">
-          Unlock the power of advanced analytics, AI-driven predictions, and immersive learning experiences to build your financial future.
+          Unlock the power of advanced analytics, AI-driven predictions, fun and immersive learning experiences to build your financial knowledge.
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4">
@@ -83,7 +139,7 @@ const HeroSection: React.FC = () => {
                 gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
               }}
             >
-              {[...dummyStocks, ...dummyStocks].map((stock, index) => (
+              {stocks.map((stock, index) => (
                 <div
                   key={index}
                   className={`w-[300px] ${index % 2 === 1 ? 'translate-x-[150px]' : ''}`}
