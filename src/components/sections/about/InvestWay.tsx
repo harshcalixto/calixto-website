@@ -6,22 +6,22 @@ import Image from 'next/image';
 const InvestWays = [
   {
     icon: '/images/wbs-right-part.png',
-    title: 'A more human way to learn',
+    title: 'Who We Are',
     description:
-      'We’re redefining what it means to learn about finance—and that means education resources that are built for today. Revolutionizing Finance Education: Modern Resources for Today’s World.',
+      'Calixto is a global collective of passionate mathematicians, AI engineers, data scientists, investment bankers, and educators spanning three continents. Our unified mission? To demystify the stock market and bring Wall Street to Main Street. We believe financial insight should not be a privilege of the few but a right of the many—regardless of education, geography, or socio-economic background.',
   },
   {
     icon: '/images/wbs-right-part.png',
-    title: 'Truly digestible financial news',
+    title: 'What We Do',
     description:
-      'Investing news—made for today. Sherwood Snacks is revolutionizing how we talk about the markets. Investing News Redefined: Sherwood Snacks is Changing the Way We Talk About the Markets, Empowering You with Insights for Today’s World.',
+      'Our platform merges fundamental stock valuation with an intuitive, gamified experience, powered by CalixtoGPT and Agentic AI technology. Whether you&apos;re a curious student, a retail investor, or a lifelong learner, Calixto transforms financial education into a fun, visual, and insightful journey. See for yourself how a company&apos;s stock price is determined—and why it matters.',
   },
-  {
-    icon: '/images/wbs-right-part.png',
-    title: 'Quality execution on every trade',
-    description:
-      'Challenge yourself and earn rewards as you learn—because investing should be as exciting as it is rewarding. Turn learning into an adventure with interactive challenges that keep you engaged.',
-  },
+  // {
+  //   icon: '/images/wbs-right-part.png',
+  //   title: 'Quality execution on every trade',
+  //   description:
+  //     'Challenge yourself and earn rewards as you learn—because investing should be as exciting as it is rewarding. Turn learning into an adventure with interactive challenges that keep you engaged.',
+  // },
 ];
 
 const InvestWay: React.FC = () => {
@@ -29,12 +29,12 @@ const InvestWay: React.FC = () => {
     <section className="w-full px-[40px] md:px-[80px] py-[40px] md:py-[100px] text-white">
       <div className="max-w-[1200px] mx-auto">
         <div className="bg-[#112B1E] rounded-3xl p-10 md:p-14">
-          <div className="flex flex-col md:flex-row justify-between items-start mb-10 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-start mb-4 md:mb-10 gap-6">
             <h2 className="text-[24px] sm:text-[30px] lg:text-[36px] font-medium">
-              Invest Your Way
+            About Us
             </h2>
-            <p className="text-sm text-gray-400 max-w-[400px]">
-              We believe the financial system should be built to work for everyone. 
+            <p className="text-sm text-gray-400 w-full md:max-w-[400px]">
+              At Calixto, you&apos;re not just learning finance. You&apos;re unlocking a superpower.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ const InvestWay: React.FC = () => {
                 className="py-6 flex flex-col sm:flex-row sm:items-start sm:gap-6"
               >
                 {/* Left: Icon + Title */}
-                <div className="flex items-center gap-4 sm:w-1/3 mb-4 sm:mb-0">
+                <div className="flex items-center gap-4 sm:w-1/4 mb-4 sm:mb-0">
                   <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-green-500 flex items-center justify-center">
                     <Image src={item.icon} alt={item.title} width={20} height={20} />
                   </div>
@@ -53,7 +53,7 @@ const InvestWay: React.FC = () => {
                 </div>
 
                 {/* Right: Description */}
-                <p className="text-sm text-gray-400 sm:w-2/3">{item.description}</p>
+                <p className="text-sm text-gray-400 sm:w-3/4">{item.description}</p>
               </div>
             ))}
           </div>

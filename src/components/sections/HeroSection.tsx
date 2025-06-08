@@ -13,7 +13,11 @@ const tickerList = [
   'MA', 'PG', 'LLY', 'HD', 'MRK',
 ];
 
-const FINNHUB_API_KEY = 'd11m0nhr01qjtpe7odsgd11m0nhr01qjtpe7odt0';
+const FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
+
+if (!FINNHUB_API_KEY) {
+  throw new Error('NEXT_PUBLIC_FINNHUB_API_KEY  is not defined in environment variables');
+}
 
 interface Stock {
   id: number;

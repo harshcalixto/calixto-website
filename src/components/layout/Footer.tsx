@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-// import Link from 'next/link';
+import Link from 'next/link';
 import {
   Linkedin,
   // Twitter,
@@ -20,11 +20,11 @@ import {
 //   { label: 'Pricing', href: '/pricing' },
 // ];
 
-// const otherLinks = [
-//   { label: 'Gamification Hub', href: '/gamification' },
-//   { label: 'User Support', href: '/support' },
-//   { label: 'About Us', href: '/about' },
-// ];
+const otherLinks = [
+  // { label: 'Gamification Hub', href: '/gamification' },
+  // { label: 'User Support', href: '/support' },
+  { label: 'About Us', href: '/about' },
+];
 
 const Footer: React.FC = () => {
   return (
@@ -62,16 +62,16 @@ const Footer: React.FC = () => {
         </div> */}
 
         {/* Other Links */}
-        {/* <div className="space-y-4">
+        <div className="space-y-4">
           <h4 className="font-semibold text-white">Other links</h4>
-          <ul className="text-gray-400 text-sm space-y-2">
+          <ul className="text-gray-400 text-sm hover:text-green-500 cursor-pointer space-y-2">
             {otherLinks.map((link) => (
               <li key={link.label}>
                 <Link href={link.href}>{link.label}</Link>
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
 
         {/* Contact Section */}
         <div className="space-y-4">
