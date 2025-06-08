@@ -125,7 +125,7 @@ const HeroSection: React.FC = () => {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4">
-          <Button label="Coming Soon" href="#" variant="filled" />
+          <Button label="About us" href="/about" variant="filled" />
           {/* <Button label="Get Started" href="/get-started" variant="filled" />
           <Button label="Explore Top Stocks" href="/top-stocks" variant="outlined" /> */}
         </div>
